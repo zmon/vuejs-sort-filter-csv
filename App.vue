@@ -1,6 +1,7 @@
 <template>
     <div>
         <h1>Sort and Filter</h1>
+        <p>Loading data from CSV will be added soon.</p>
         <label>
             Search:
             <input v-model="filterBy">
@@ -11,7 +12,7 @@
                 <th v-on:click="sortBy('first_name')">First Name</th>
                 <th v-on:click="sortBy('last_name')">Last Name</th>
             </tr>
-            <tr  v-for="user in this.usersSorted" :key="user.id">
+            <tr  v-for="user in this.usersSorted" :key="user.id">   <!-- this.usersSorted is in the computed section -->
                 <td>{{ user.id }}</td>
                 <td>{{ user.first_name }}</td>
                 <td>{{ user.last_name }}</td>
@@ -50,6 +51,8 @@
             }
         },
         computed: {
+            // Any time somethin in the data changes this gets called.  So when we change the filter or sort options
+            //  we create a new usersSorted, which causes the table to be regenerated.
             usersSorted: function() {
                 return _.orderBy(this.users, this.sortKey, this.sortOrder)
                     .filter(user => {
